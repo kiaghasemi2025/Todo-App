@@ -1,19 +1,24 @@
+import { useState } from 'react'
 import TodoList from './components/TodoList'
 import NewTodo from './components/NewTodo'
-import './App.css'
-import type {Todo} from './components/TodoList'
+
+import type { Todo } from './components/TodoList'
 
 const App = () => {
-  const todos:Todo[] = [
-    {id:'1' , text:'First-Task'},
-    {id:'2' , text:'Second-Task'},
-    {id:'3' , text:'Third-Task'},
-    {id:'4' , text:'Fourth-Task'},
-  ]
+  const [todos, setTodos] = useState<Todo[]>([])
+
+  const addTodoHandler = (text: string) => {
+    setTodos(prevTodos => [...prevTodos, { id: crypto.randomUUID(), text }])
+  }
+
+  const deleteTodoHandler = (todoId: string) => {
+    setTodos(prev => prev.filter(todo => todo.id !== todoId))
+  }
+
   return (
     <div>
-      <NewTodo />
-      <TodoList items={todos}/>
+      <NewTodo onAddTodo={addTodoHandler} />
+      <TodoList items={todos} onDeleteTodo={deleteTodoHandler} />
     </div>
   )
 

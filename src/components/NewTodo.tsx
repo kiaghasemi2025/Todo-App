@@ -1,13 +1,19 @@
-import { useRef , type SubmitEvent } from 'react';
+import { useRef, type SubmitEvent } from 'react';
+import './NewTodo.css'
+type NewTodoProps = {
+    onAddTodo: (todoText: string) => void;
+}
 
-const NewTodo = () => {
+const NewTodo = (props: NewTodoProps) => {
 
     const textInputRef = useRef<HTMLInputElement>(null);
 
     const formSubmitHandler = (event: SubmitEvent) => {
         event.preventDefault()
-        const enterdText = textInputRef.current?.value
-        console.log(enterdText);
+        const enteredText = textInputRef.current!.value;
+        if (!enteredText) return
+        props.onAddTodo(enteredText)
+        textInputRef.current!.value = ''
     }
 
     return (

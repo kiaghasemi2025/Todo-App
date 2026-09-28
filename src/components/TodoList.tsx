@@ -1,11 +1,21 @@
-export type Todo = {id:string,text:string}
-interface TodoListProps {items:Todo[]}
+import './TodoList.css'
+export type Todo = { id: string, text: string }
 
-const TodoList = ({items}:TodoListProps) => {
+interface TodoListProps {
+    items: Todo[];
+    onDeleteTodo: (todoId: string) => void;
+}
+
+const TodoList = ({ items, onDeleteTodo }: TodoListProps) => {
 
     return (
         <ul>
-            {items.map(todo => <li key={todo.id}>{todo.text}</li>)}
+            {items.map(todo => <li key={todo.id}>
+                <span>
+                    {todo.text}
+                </span>
+                <button onClick={() => onDeleteTodo(todo.id)}>DELETE</button>
+            </li>)}
         </ul>
     )
 }
